@@ -1,0 +1,7 @@
+2021-02-05 18:44:00,835, DEBUG, root, Запуск Telegram-бота
+2021-02-05 18:44:01,406, INFO, root, Отправлено сообщение в чат Telegram
+2021-02-05 18:44:01,406, DEBUG, telegram.bot, Entering: send_message
+2021-02-05 18:44:01,406, DEBUG, telegram.vendor.ptb_urllib3.urllib3.connectionpool, Starting new HTTPS connection (1): api.telegram.org
+2021-02-05 18:44:01,689, DEBUG, telegram.vendor.ptb_urllib3.urllib3.connectionpool, https://api.telegram.org:443 "POST /bot1579038549:AAEQ6s75QjFhSHRQHJLRyw8jom4Spk-FySI/sendMessage HTTP/1.1" 200 744
+2021-02-05 18:44:01,689, DEBUG, telegram.bot, {'message_id': 16, 'date': 1612539839, 'chat': {'id': 350758260, 'type': 'private', 'username': 'dansen95', 'first_name': 'Daniel', 'last_name': 'Sen'}, 'text': 'У вас проверили работу "dansen95__api_01_sms.zip"!\n\nРевьюеру всё понравилось, можно приступать к следующему уроку.', 'entities': [], 'caption_entities': [], 'photo': [], 'new_chat_members': [], 'new_chat_photo': [], 'delete_chat_photo': False, 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'from': {'id': 1579038549, 'first_name': 'supersmartbot', 'is_bot': True, 'username': 'SuperAmazingBot'}}
+2021-02-05 18:44:01,689, DEBUG, telegram.bot, Exiting: send_message
