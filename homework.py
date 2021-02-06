@@ -22,23 +22,27 @@ API_URL = 'https://praktikum.yandex.ru/api/user_api/homework_statuses/'
 
 def parse_homework_status(homework):
     try:
-        homework_name = homework.get('homework_name')
-        if homework.get('status') == 'rejected':
+        homework_name = homework['homework_name']
+        if homework['status'] == 'rejected':
             verdict = 'К сожалению в работе нашлись ошибки.'
-        else:
+        elif homework['status'] == 'approved':
             verdict = ('Ревьюеру всё понравилось, '
                        'можно приступать к следующему уроку.')
+        else:
+            verdict = 'Произошла какая-то ошибка'
         return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
 
     except KeyError as e:
-        logging.error(e)
-        return 'Что-то пошло не так'
+        logging.error(msg=f'Ошибка: {e}')
+        return f'Ошибка: {e}'
 
 
 def get_homework_statuses(current_timestamp):
     headers = {
         'Authorization': f'OAuth {PRAKTIKUM_TOKEN}',
     }
+    if current_timestamp is None:
+        current_timestamp = int(time.time())
     params = {
         'from_date': current_timestamp,
     }
@@ -46,10 +50,12 @@ def get_homework_statuses(current_timestamp):
         homework_statuses = requests.get(
             API_URL, params=params, headers=headers
             )
+
         return homework_statuses.json()
+
     except requests.RequestException as error:
-        logging.exception("Exception occurred")
-        print(f'Ошибка: {error}')
+        logging.exception(msg=f'Ошибка: {error}')
+        raise error
 
 
 def send_message(message, bot_client):
@@ -77,7 +83,7 @@ def main():
             time.sleep(300)
 
         except Exception as e:
-            print(f'Бот столкнулся с ошибкой: {e}')
+            logging.exception(msg=f'Ошибка: {e}')
             send_message(e, bot_client)
             time.sleep(5)
 
