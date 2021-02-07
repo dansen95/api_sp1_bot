@@ -29,7 +29,12 @@ def parse_homework_status(homework):
             verdict = ('Ревьюеру всё понравилось, '
                        'можно приступать к следующему уроку.')
         else:
-            verdict = 'Произошла какая-то ошибка'
+            try:
+                raise ValueError('Ответ сервера содержит неверный статус')
+            except (KeyError, ValueError) as e:
+                logging.error(msg=f'Ошибка: {e}')
+                return f'Ошибка: {e}'
+
         return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
 
     except KeyError as e:
@@ -54,7 +59,6 @@ def get_homework_statuses(current_timestamp):
         return homework_statuses.json()
 
     except requests.RequestException as error:
-        logging.exception(msg=f'Ошибка: {error}')
         raise error
 
 
@@ -72,8 +76,8 @@ def main():
         try:
             new_homework = get_homework_statuses(current_timestamp)
             if new_homework.get('homeworks'):
-                send_message(parse_homework_status(
-                    new_homework.get('homeworks')[0]),
+                send_message(
+                    parse_homework_status(new_homework.get('homeworks')[0]),
                     bot_client
                     )
             current_timestamp = new_homework.get(
