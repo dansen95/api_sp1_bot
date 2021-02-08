@@ -29,15 +29,11 @@ def parse_homework_status(homework):
             verdict = ('Ревьюеру всё понравилось, '
                        'можно приступать к следующему уроку.')
         else:
-            try:
-                raise ValueError('Ответ сервера содержит неверный статус')
-            except (KeyError, ValueError) as e:
-                logging.error(msg=f'Ошибка: {e}')
-                return f'Ошибка: {e}'
+            raise ValueError('Ответ сервера содержит неверный статус')
 
         return f'У вас проверили работу "{homework_name}"!\n\n{verdict}'
 
-    except KeyError as e:
+    except (KeyError, ValueError) as e:
         logging.error(msg=f'Ошибка: {e}')
         return f'Ошибка: {e}'
 
