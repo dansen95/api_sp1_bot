@@ -45,7 +45,7 @@ def get_homework_statuses(current_timestamp):
     if current_timestamp is None:
         current_timestamp = int(time.time())
     params = {
-        'from_date': 0,
+        'from_date': current_timestamp,
     }
     try:
         homework_statuses = requests.get(
