@@ -64,7 +64,7 @@ def send_message(message, bot_client):
 
 
 def main():
-    bot_client = telegram.Bot(token=TELEGRAM_TOKEN)
+    bot_client = telegram.Bot(token=str(TELEGRAM_TOKEN))
     logging.debug('Запуск Telegram-бота')
     current_timestamp = int(time.time())
 
